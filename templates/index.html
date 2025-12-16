@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Performance Monitor</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        form { margin-bottom: 20px; }
+        input[type="text"] { width: 300px; padding: 8px; }
+        button { padding: 8px 16px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #45a049; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h1>API Performance Monitor</h1>
+    <p>Enter an API URL below to test its response time. Results will be displayed and stored.</p>
+    
+    <form action="/check" method="post">
+        <label for="url">API URL:</label>
+        <input type="text" id="url" name="url" placeholder="e.g., https://jsonplaceholder.typicode.com/posts" required>
+        <button type="submit">Test API</button>
+    </form>
+    
+    <h2>Past API Tests</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>URL</th>
+                <th>Response Time (ms)</th>
+                <th>Status Code</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for test in tests %}
+            <tr>
+                <td>{{ test.url }}</td>
+                <td>{{ "%.2f"|format(test.response_time) }}</td>
+                <td>{{ test.status_code }}</td>
+                <td>{{ test.timestamp }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
